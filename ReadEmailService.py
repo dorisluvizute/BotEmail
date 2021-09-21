@@ -112,8 +112,13 @@ def find_error_email():
                     print("--- EMAIL DE ERRO LOCALIZADO ---")
                     if 'postmaster@outlook.com' in from_:
                         if msg.is_multipart():
-                            for part in msg.get_payload():
-                                if part.get_content_type() == 'text/plain':
-                                    mail_content.append(msg.get_payload()[1])
-                    
+                            # for part in msg.get_payload():
+                            #     if part.get_default_type() == 'text/plain':
+                                    mail_content.append(msg.get_payload()[0].get_payload()[0].get_payload())
+
+                            # for mail in mail_content:
+                            #     print(mail[1])                    
+
+    
     return mail_content
+
