@@ -32,7 +32,8 @@ def send_mail(send_from, send_to, subject, text, files=[]):
     smtp = smtplib.SMTP("smtp.office365.com", 587)
     
     smtp.starttls()
-    smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    smtp.login("bot@bringto.com", DecryptService.decrypt("UWludGVzc0AxMjM="))
 
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
