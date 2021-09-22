@@ -1,5 +1,7 @@
 import imaplib
 import email
+import os
+import DecryptService
 
 from email.header import decode_header
 from typing import cast
@@ -7,8 +9,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def read_email(subject_filter):
-    username = "dluvizute@hotmail.com"
-    password = "Doris1509*"
+    username = os.environ["USER"]
+    password = DecryptService.decrypt(os.environ["PASSWORD"])
+    # password = "Doris1509*"
 
     # create an IMAP4 class with SSL 
     imap = imaplib.IMAP4_SSL("outlook.office365.com")
