@@ -30,13 +30,18 @@ def get_all_emails():
     
     return emails
 
-def change_excel_status(status):
+def change_excel_status(email, status):
     try:
-        count = 1
         wb = load_workbook("C:\\EmailBot\\files\\PlanilhaNovosFuncionarios.xlsx")
         ws = wb.worksheets[0]
 
-        ws["C" + str(count+1)] = status
+        count = 1
+        for i in get_all_emails():
+            
+            if i == email:
+                ws["C" + str(count+1)] = status
+            
+            count += 1
 
         wb.save("C:\\EmailBot\\files\\PlanilhaNovosFuncionarios.xlsx")
     
@@ -63,9 +68,11 @@ def is_already_send(email):
     status = ''
     for cell in ws["B"]:
         if cell.value == email:
-            status = ws["C" + str(count+1)].value
-
+            status = ws["C" + str(count)].value
+        
         count += 1
+
+        
     
     if status == "ENVIADO":
         return True

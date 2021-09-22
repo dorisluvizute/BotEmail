@@ -52,7 +52,7 @@ def read_email(subject_filter):
                 # print("Subject:", subject)
                 # print("From:", from_)
 
-                if subject_filter in subject:
+                if subject_filter in subject or "Undeliverable" in subject:
                     if 'Não é possível entregar' in subject_filter:
                         print("--- EMAIL DE ERRO LOCALIZADO ---")
                         if msg.is_multipart():
