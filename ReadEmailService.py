@@ -9,12 +9,18 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def read_email(subject_filter):
-    username = os.environ["USER"]
-    password = DecryptService.decrypt(os.environ["PASSWORD"])
+    # username = os.environ["USER"]
+    # password = DecryptService.decrypt(os.environ["PASSWORD"])
+    username = "bot"
+    password = DecryptService.decrypt("UWludGVzc0AyMDIx")
+    
+    # username = "dluvizute@hotmail.com"
+    # password= DecryptService.decrypt("RG9yaXMxNTA5Kg==")
 
     # create an IMAP4 class with SSL 
-    imap = imaplib.IMAP4_SSL("outlook.office365.com")
-
+    imap = imaplib.IMAP4_SSL("webmail.resource.com.br")
+    # imap = imaplib.IMAP4_SSL("outlook.office365.com")
+    
     # authenticate
     imap.login(username, password)
 
@@ -30,7 +36,11 @@ def read_email(subject_filter):
     mail_content = []
     for i in range(messages, messages-N, -1):
         # fetch the email message by ID
-        res, msg = imap.fetch(str(i), "(RFC822)")
+        try:
+            res, msg = imap.fetch(str(i), "(RFC822)")
+        except:
+            break
+        
         for response in msg:
             if isinstance(response, tuple):
                 # parse a bytes email into a message object
@@ -62,10 +72,11 @@ def read_email(subject_filter):
 
                     elif 'Informações Cadastrais para Depto Pessoal' in subject_filter:
                         print("--- FO LOCALIZADA ---")                    
-                        if msg.is_multipart():
-                            for part in msg.get_payload():
-                                if part.get_content_type() == 'text/plain':
-                                    mail_content.append(part.get_payload())                
+                        # if msg.is_multipart():
+                        # for part in msg.get_payload():
+                        #     if part.get_content_type() == 'text/plain':
+                        if msg.get_default_type() == 'text/plain':
+                            mail_content.append(msg.get_payload())              
 
     
     return mail_content

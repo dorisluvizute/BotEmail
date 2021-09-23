@@ -1,4 +1,4 @@
-import smtplib
+import smtplib, ssl
 import os
 import DecryptService
 
@@ -41,13 +41,15 @@ def send_mail(send_from, send_to, subject, text, files=[]):
         part['Content-Disposition'] = 'attachment; filename="%s"' % basename(f)
         msg.attach(part)
 
+    context = ssl.create_default_context()
 
-    smtp = smtplib.SMTP("smtp.office365.com", 587)
+    smtp = smtplib.SMTP("webmail.resource.com.br", 587)
+    smtp.ehlo()
     
-    smtp.starttls()
-    smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
-    # smtp.login("dluvizute@hotmail.com", DecryptService.decrypt("RG9yaXMxNTA5Kg=="))
-
+    smtp.starttls(context=context)
+    # # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    # smtp.login("bot", DecryptService.decrypt("UWludGVzc0AyMDIx"))
+    # smtp.connect()
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
 
