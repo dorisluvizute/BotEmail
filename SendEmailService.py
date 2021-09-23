@@ -16,7 +16,20 @@ def send_mail(send_from, send_to, subject, text, files=[]):
     msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = subject
 
-    msg.attach(MIMEText(text))
+    text = text.split("\n")
+    html = '<html><head><style> #orientacao {font-size: 16px;} .chamativo {font-size: 16px; font-style: bold; color: #9100F5} .importante {font-style: bold; color: #9100F5}</style></head><body>'
+    html += f'<br>{text[0]}<br><br>{text[1]}<br><br>{text[2]}<br><br>{text[3]}<br>'
+    html += f'<br><u id = "orientacao">{text[4]}</u>'
+    html += f'<br><strong class = "chamativo">{text[5]}</strong>'
+    html += f'<br>{text[6]}<br>{text[7]}<br>{text[8]}<br>'
+    html += f'<br><strong class = "chamativo">{text[9]}</strong>'
+    html += f'<br>{text[10]}<br>'
+    html += f'<br><strong class = "importante"><center>{text[11]}</center></strong>'
+    html += f'<br><strong class = "importante">{text[12]}</strong>'
+    html += f'</body></html>'
+  
+
+    msg.attach(MIMEText(html, 'html'))
 
     for f in files or []:
         with open(f, "rb") as fil:
@@ -32,8 +45,8 @@ def send_mail(send_from, send_to, subject, text, files=[]):
     smtp = smtplib.SMTP("smtp.office365.com", 587)
     
     smtp.starttls()
-    # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
-    smtp.login("bot@bringto.com", DecryptService.decrypt("UWludGVzc0AxMjM="))
+    smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    # smtp.login("dluvizute@hotmail.com", DecryptService.decrypt("RG9yaXMxNTA5Kg=="))
 
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
