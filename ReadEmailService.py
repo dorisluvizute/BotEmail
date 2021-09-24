@@ -11,15 +11,17 @@ from email.mime.text import MIMEText
 def read_email(subject_filter):
     # username = os.environ["USER"]
     # password = DecryptService.decrypt(os.environ["PASSWORD"])
+    
+    # username = "re038282@qintess.com"
     username = "bot"
     password = DecryptService.decrypt("UWludGVzc0AyMDIx")
-    
+
     # username = "dluvizute@hotmail.com"
-    # password= DecryptService.decrypt("RG9yaXMxNTA5Kg==")
+    # password = "Doris1509*"
 
     # create an IMAP4 class with SSL 
-    imap = imaplib.IMAP4_SSL("webmail.resource.com.br")
     # imap = imaplib.IMAP4_SSL("outlook.office365.com")
+    imap = imaplib.IMAP4_SSL("webmail.resource.com.br")
     
     # authenticate
     imap.login(username, password)
@@ -56,13 +58,9 @@ def read_email(subject_filter):
                         subject = subject.decode(encoding='UTF-8')
                     except:                    
                         subject = subject.decode(encoding='ISO-8859-1')
-                    
-                    #subject = subject.decode()
 
                 # email sender
                 from_ = msg.get("From")
-                # print("Subject:", subject)
-                # print("From:", from_)
 
                 if subject_filter in subject or "Undeliverable" in subject:
                     if 'Não é possível entregar' in subject_filter:
@@ -71,10 +69,7 @@ def read_email(subject_filter):
                             mail_content.append(msg.get_payload()[0].get_payload()[0].get_payload())
 
                     elif 'Informações Cadastrais para Depto Pessoal' in subject_filter:
-                        print("--- FO LOCALIZADA ---")                    
-                        # if msg.is_multipart():
-                        # for part in msg.get_payload():
-                        #     if part.get_content_type() == 'text/plain':
+                        print("--- FO LOCALIZADA ---")                   
                         if msg.get_default_type() == 'text/plain':
                             mail_content.append(msg.get_payload())              
 

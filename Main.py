@@ -9,14 +9,14 @@ dict = Dictionary.dictionary()
 mail_content = ReadEmailService.read_email("Informações Cadastrais para Depto Pessoal")
 
 for email in mail_content:
-    employee_data = email.split("\n")
+    employee_data = email[1].get_payload().split("\n")
 
-    # email_employee = employee_data[86].split("mailto:")[1].split('"')[0]
-    email_employee = (employee_data[87]+employee_data[88]).split(">")[3].split("<")[0].replace("=\r", "")
+    email_employee = employee_data.split("mailto:")[0].split('"')[0]
+    # email_employee = (employee_data[87]+employee_data[88]).split(">")[3].split("<")[0].replace("=\r", "")
     
     if not SheetService.check_if_email_exists_in_worksheet(email_employee):
-        # name_employee = employee_data[77].split(">")[1].replace("</span", "")
-        name_employee = employee_data[78].split(">")[1].replace("</span", "")
+        name_employee = employee_data[77].split(">")[1].replace("</span", "")
+        # name_employee = employee_data[78].split(">")[1].replace("</span", "")
          
 
         if "&nbsp;" in name_employee:
@@ -42,7 +42,8 @@ for email in emails:
     try:
         if not SheetService.is_already_send(email):
             # SendEmailService.send_mail(os.environ["USER"], email, os.environ["EMAIL_SUBJECT"], Dictionary.body_text(), files)
-            SendEmailService.send_mail("bot@bringto.com", email, "BEM VINDO - PROCESSO DE ADMISSAO QINTESS", Dictionary.body_text(), files)
+            SendEmailService.send_mail("bot@resource.com", email, "BEM VINDO - PROCESSO DE ADMISSAO QINTESS", Dictionary.body_text(), files)
+            # SendEmailService.send_mail("re038282@qintess.com", email, "BEM VINDO - PROCESSO DE ADMISSAO QINTESS", Dictionary.body_text(), files)
             SheetService.change_excel_status(email, "ENVIADO")
             count += 1
     except:

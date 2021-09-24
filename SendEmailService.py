@@ -43,12 +43,14 @@ def send_mail(send_from, send_to, subject, text, files=[]):
 
     context = ssl.create_default_context()
 
-    smtp = smtplib.SMTP("webmail.resource.com.br", 587)
+    smtp = smtplib.SMTP("smtp.office365.com", 587)
     smtp.ehlo()
     
     smtp.starttls(context=context)
-    # # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
-    # smtp.login("bot", DecryptService.decrypt("UWludGVzc0AyMDIx"))
+    # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    smtp.login("bot", DecryptService.decrypt("UWludGVzc0AyMDIx"))
+    # smtp.login("re038282@qintess.com", DecryptService.decrypt("UWludGVzc0AyMDIx"))
+    # smtp.login("dluvizute@hotmail.com", "Doris1509*")
     # smtp.connect()
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
