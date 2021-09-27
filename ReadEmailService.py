@@ -9,26 +9,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 def read_email(subject_filter):
-    # username = os.environ["USER"]
-    # password = DecryptService.decrypt(os.environ["PASSWORD"])
-    
-    # username = "re038282@qintess.com"
-    username = "bot"
-    password = DecryptService.decrypt("UWludGVzc0AyMDIx")
-
-    # username = "dluvizute@hotmail.com"
-    # password = "Doris1509*"
+    username = os.environ["USER"]
+    password = DecryptService.decrypt(os.environ["PASSWORD"])
 
     # create an IMAP4 class with SSL 
-    # imap = imaplib.IMAP4_SSL("outlook.office365.com")
-    imap = imaplib.IMAP4_SSL("webmail.resource.com.br")
+    imap = imaplib.IMAP4_SSL("outlook.office365.com")
     
     # authenticate
     imap.login(username, password)
-
     status, messages = imap.select("INBOX")
+
     # number of top emails to fetch
     N = 200
+    
     # total number of emails
     messages = int(messages[0])
     print("Total de emails - %s" % messages)

@@ -1,13 +1,10 @@
 import os
 from openpyxl import load_workbook
 
-diretorio = "C:\\EmailBot\\files\\PlanilhaFuturosFuncionarios.xlsx"
-
 def fill_excel_worksheet(email_employee, name_employee):
     try:
         count = 1
-        # wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-        wb = load_workbook(diretorio)
+        wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
         ws = wb.worksheets[0]
 
         while ws["A" + str(count+1)].value != None and ws["B" + str(count+1)].value != None:
@@ -16,15 +13,13 @@ def fill_excel_worksheet(email_employee, name_employee):
         ws["A" + str(count+1)] = name_employee
         ws["B" + str(count+1)] = email_employee
 
-        # wb.save(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-        wb.save(diretorio)
+        wb.save(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
 
     except:
         raise ValueError('Não foi possível preencher a planilha com os dados do empregado.')
 
 def get_all_emails():
-    # wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-    wb = load_workbook(diretorio)
+    wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
     ws = wb.worksheets[0]
 
     emails = []
@@ -38,8 +33,7 @@ def get_all_emails():
 
 def change_excel_status(email, status):
     try:
-        # wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-        wb = load_workbook(diretorio)
+        wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
         ws = wb.worksheets[0]
 
         count = 1
@@ -50,16 +44,14 @@ def change_excel_status(email, status):
             
             count += 1
 
-        # wb.save(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-        wb.save(diretorio)
+        wb.save(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
     
     except:
         raise ValueError("Não foi possível alterar o status no excel.")
 
 
 def check_if_email_exists_in_worksheet(email):
-    # wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-    wb = load_workbook(diretorio)
+    wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
     ws = wb.worksheets[0]
 
     validate = False
@@ -70,8 +62,7 @@ def check_if_email_exists_in_worksheet(email):
     return validate
 
 def is_already_send(email):
-    # wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
-    wb = load_workbook(diretorio)
+    wb = load_workbook(os.environ["DIRETORIO"] + "PlanilhaFuturosFuncionarios.xlsx")
     ws = wb.worksheets[0]
 
     count = 1

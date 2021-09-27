@@ -47,11 +47,8 @@ def send_mail(send_from, send_to, subject, text, files=[]):
     smtp.ehlo()
     
     smtp.starttls(context=context)
-    # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
-    smtp.login("bot", DecryptService.decrypt("UWludGVzc0AyMDIx"))
-    # smtp.login("re038282@qintess.com", DecryptService.decrypt("UWludGVzc0AyMDIx"))
-    # smtp.login("dluvizute@hotmail.com", "Doris1509*")
-    # smtp.connect()
+    smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
 
