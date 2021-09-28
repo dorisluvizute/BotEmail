@@ -59,7 +59,10 @@ def read_email(subject_filter):
                     if 'Não é possível entregar' in subject_filter:
                         print("--- EMAIL DE ERRO LOCALIZADO ---")
                         if msg.is_multipart():
-                            mail_content.append(msg.get_payload()[0].get_payload()[0].get_payload())
+                            if "&quot;" in msg.get_payload()[0].get_payload().split("To: ")[1].split(",")[0]:
+                                mail_content.append(msg.get_payload()[0].get_payload().split("To: ")[1].split(",")[0].split("&quot;")[1])
+                            else:
+                                msg.get_payload()[0].get_payload().split("To: ")[1].split(",")[0]
 
                     elif 'Informações Cadastrais para Depto Pessoal' in subject_filter:
                         print("--- FO LOCALIZADA ---")                   

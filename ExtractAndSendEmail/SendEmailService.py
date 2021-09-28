@@ -1,3 +1,6 @@
+import sys
+sys.path.insert(0, '/EmailBot')
+
 import smtplib, ssl
 import os
 import DecryptService
@@ -10,9 +13,11 @@ from email.utils import COMMASPACE, formatdate
 
 
 def send_mail(send_from, send_to, subject, text, files=[]):
+    assert isinstance(send_to, list)
+
     msg = MIMEMultipart()
     msg['From'] = send_from
-    msg['To'] = send_to
+    msg['To'] = COMMASPACE.join(send_to)
     msg['Date'] = formatdate(localtime=True)
     msg['Subject'] = subject
 
