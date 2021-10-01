@@ -1,9 +1,12 @@
 import sys
+# sys.path.insert(0, 'Admissoes/EmailBot')
 sys.path.insert(0, '/EmailBot')
+# sys.path.append("..")
+
+import DecryptService
 
 import smtplib, ssl
 import os
-import DecryptService
 
 from os.path import basename
 from email.mime.application import MIMEApplication
@@ -52,7 +55,8 @@ def send_mail(send_from, send_to, subject, text, files=[]):
     smtp.ehlo()
     
     smtp.starttls(context=context)
-    smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    # smtp.login(os.environ["USER"], DecryptService.decrypt(os.environ["PASSWORD"]))
+    smtp.login("bot@resource.com.br", DecryptService.decrypt("UWludGVzc0AyMDIx"))
     
     smtp.sendmail(send_from, send_to, msg.as_string())
     smtp.close()
